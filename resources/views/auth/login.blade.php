@@ -29,7 +29,7 @@
                                             <input id="remember_me" name="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800">
                                         </div>
                                         <div class="ml-3 text-sm">
-                                            <label for="remember" class="text-gray-500 dark:text-gray-300">Recordar mi sesión</label>
+                                            <label for="remember_me" class="text-gray-500 dark:text-gray-300">Recordar mi sesión</label>
                                         </div>
                                     </div>
                                     @if (Route::has('password.request'))
