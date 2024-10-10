@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div class="bg-gray-50">
-        <div class="max-w-6xl mx-auto grid grid-cols-2 items-center">
+        <div class="max-w-6xl mx-auto grid lg:grid-cols-2 items-center py-8 lg:py-0">
             {{-- Columna 1 - Formulario --}}
             <section class="dark:bg-gray-900">
                 <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -46,7 +46,7 @@
                 </div>
             </section>
             {{-- Columna 2 - Gráfico --}}
-            <div>
+            <div class="hidden lg:block">
                 <img src="{{ asset('images/login_illustration.svg') }}" alt="">
             </div>
         </div>
