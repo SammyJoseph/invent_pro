@@ -24,4 +24,9 @@ class Product extends Model
                     ->withPivot('quantity', 'price')
                     ->withTimestamps();
     }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
 }

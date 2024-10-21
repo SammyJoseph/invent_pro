@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -11,7 +14,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::with('image')->get()->map(function ($product) {
+            $product->image_url = $product->image ? Storage::url($product->image->url) : null;
+            return $product;
+        });
+    
+        return view('products.index', compact('products'));
     }
 
     /**
@@ -19,7 +27,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+
+        return view('products.create', compact('categories'));
     }
 
     /**
@@ -27,7 +37,9 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // TODO: recibir imagen del formulario
+
+        return $request->all();
     }
 
     /**
@@ -43,7 +55,8 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::find($id);
+        return $product;
     }
 
     /**
@@ -59,6 +72,13 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::find($id);
+    
+        if ($product->image) {
+            Storage::delete($product->image->url);
+        }
+
+        $product->delete();
+        return redirect()->route('dashboard.products.index')->with('success', 'Producto eliminado');
     }
 }

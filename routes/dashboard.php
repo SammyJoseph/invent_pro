@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Log;
 
@@ -11,3 +12,5 @@ Route::get('/', function () {
 Route::get('/components-accordion', function () {
     return view('dashboard.components-accordion');
 })->name('components-accordion');
+
+Route::resource('products', ProductController::class);

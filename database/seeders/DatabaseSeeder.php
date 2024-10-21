@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,9 +21,13 @@ class DatabaseSeeder extends Seeder
             'email' => 'sam@example.com',
         ]);
 
+        Storage::deleteDirectory('products');
+        Storage::makeDirectory('products');
+
         $this->call([
             CategorySeeder::class,
             ProductSeeder::class,
+            ImageSeeder::class,
             SaleSeeder::class,
         ]);
     }

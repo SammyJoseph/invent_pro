@@ -1,6 +1,10 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Lineone - CRM Analytics Dashboard')
+@section('title', 'Dashboard')
+
+@push('head')
+    <script src="{{ asset('dashboard_ui/js/pages/dashboards-crm-analytics.js') }}" defer></script>
+@endpush
 
 @section('content')
     <!-- Main Content Wrapper -->

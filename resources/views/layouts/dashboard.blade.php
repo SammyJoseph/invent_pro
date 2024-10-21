@@ -18,9 +18,6 @@
         <!-- Javascript Third Party Libraries: Components -->
         <script src="{{ asset('dashboard_ui/js/libs/components.js') }}" defer></script>
 
-        <!-- Special script for current page -->
-        <script src="{{ asset('dashboard_ui/js/pages/dashboards-crm-analytics.js') }}"></script>
-
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
