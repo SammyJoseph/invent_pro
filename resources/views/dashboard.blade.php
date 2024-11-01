@@ -9,6 +9,15 @@
 @section('content')
     <!-- Main Content Wrapper -->
     <main class="main-content w-full pb-8">
+        <ul>
+            @foreach($categoryA as $product)
+                <li>
+                    {{ $product->name }} - 
+                    Sold: {{ $product->total_sold }} units, 
+                    Total Amount: ${{ number_format($product->total_amount, 2) }}
+                </li>
+            @endforeach
+        </ul>
         <div class="mt-4 grid grid-cols-12 gap-4 px-[var(--margin-x)] transition-all duration-[.25s] sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6">
             <div class="col-span-12 lg:col-span-8">
                 <div class="flex items-center justify-between space-x-2">

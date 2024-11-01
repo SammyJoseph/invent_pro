@@ -14,14 +14,20 @@ class ImageSeeder extends Seeder
      */
     public function run(): void
     {
+        // Crear solo 2 imágenes (no una por cada producto (para mejorar la performance al ejecutar el seeder))
+        $baseImages = Image::factory()->count(10)->make();
+
         $products = Product::all();
 
-        // Crear una imagen para cada producto
+        // Asignar una imagen aleatoria a cada producto (las 2 imágenes se repetirán para los productos)
         foreach ($products as $product) {
-            Image::factory()->create([
+            $randomImage = $baseImages->random();
+
+            Image::create([
+                'url' => $randomImage->url,
                 'imageable_id' => $product->id,
                 'imageable_type' => Product::class,
             ]);
-        }        
+        }
     }
 }

@@ -15,23 +15,32 @@ class SaleSeeder extends Seeder
     public function run(): void
     {
         Sale::factory()->count(200)->create()->each(function ($sale) {            
-            $products = Product::inRandomOrder()->take(rand(1, 5))->get()->unique('id'); // Para cada venta, agregar entre 1 y 5 productos
+            $products = Product::inRandomOrder()->take(rand(1, 5))->get()->unique('id');
             
-            $total = 0;
+            $total_amount = 0;
+            $total_cost = 0;
+
             foreach ($products as $product) {
-                $quantity = rand(1, 3); // Cada producto tiene una cantidad aleatoria de unidades vendidas por venta
-                $price = $product->price;
+                $quantity = rand(1, 3);
+                $sale_price = $product->sale_price;
+                $purchase_price = $product->purchase_price;
                 
                 $sale->products()->attach($product->id, [
                     'quantity' => $quantity,
-                    'price' => $price
+                    'price' => $sale_price
                 ]);
                 
-                $total += $quantity * $price;
+                $total_amount += $quantity * $sale_price;
+                $total_cost += $quantity * $purchase_price;
             }
             
-            // Actualizar el total_amount de la venta
-            $sale->update(['total_amount' => $total]);
+            $total_profit = $total_amount - $total_cost;
+
+            $sale->update([
+                'total_amount' => $total_amount,
+                'total_cost' => $total_cost,
+                'total_profit' => $total_profit
+            ]);
         });
     }
 }

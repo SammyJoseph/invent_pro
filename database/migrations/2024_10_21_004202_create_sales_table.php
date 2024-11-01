@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->dateTime('sale_date');
-            $table->decimal('total_amount', 10, 2);
+            $table->decimal('total_amount', 10, 2); // total de la venta
+            $table->decimal('total_cost', 10, 2); // total de costos de todos los productos vendidos
+            $table->decimal('total_profit', 10, 2);  // diferencia entre el total de la venta y el total de costos
+            $table->string('payment_method');
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

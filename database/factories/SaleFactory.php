@@ -18,7 +18,11 @@ class SaleFactory extends Factory
     {
         return [
             'sale_date' => $this->faker->dateTimeBetween('-1 year', 'now'),
-            'total_amount' => 0, // Inicialmente en 0, se calculará después en el seeder
+            'total_amount' => 0, // Se calculará después en el seeder
+            'total_cost' => 0, // Se calculará después en el seeder
+            'total_profit' => 0, // Se calculará después en el seeder
+            'payment_method' => $this->faker->randomElement(['Efectivo', 'Yape', 'Plin', 'Tarjeta', 'Otro']),
+            'notes' => $this->faker->optional(0.3)->sentence(),
         ];
     }
 }
