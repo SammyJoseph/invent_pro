@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -14,8 +15,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('image')->get()->map(function ($product) {
+        $products = Product::with(['image', 'categories'])->get()->map(function ($product) {
             $product->image_url = $product->image ? Storage::url($product->image->url) : null;
+            $product->category_names = $product->categories->pluck('name')->implode(', ');
             return $product;
         });
     
@@ -37,9 +39,42 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO: recibir imagen del formulario
-
-        return $request->all();
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'category' => 'required|exists:categories,id',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'image_info' => 'required|json'
+        ]);
+    
+        $imageInfo = json_decode($request->image_info, true);
+    
+        $product = Product::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'stock' => $request->stock,
+        ]);
+    
+        $product->categories()->attach($request->category);
+    
+        if ($imageInfo) {
+            $tmpPath = $imageInfo['path'];
+            $fileName = pathinfo($imageInfo['fileName'], PATHINFO_FILENAME);
+            $extension = pathinfo($imageInfo['fileName'], PATHINFO_EXTENSION);
+            $newFileName = md5($fileName . time()) . '.' . $extension;
+            $newPath = 'products/' . $newFileName;
+    
+            Storage::move($tmpPath, $newPath);
+    
+            // Crear la entrada de imagen en la base de datos
+            $product->image()->create([
+                'url' => $newPath
+            ]);
+    
+            Storage::deleteDirectory(dirname($tmpPath));
+        }
+    
+        return redirect()->route('dashboard.products.index')->with('success', 'Producto creado exitosamente');
     }
 
     /**
@@ -53,18 +88,58 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Product $product)
     {
-        $product = Product::find($id);
-        return $product;
+        $categories = Category::all();
+
+        return view('products.edit', compact('product', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'category' => 'required|exists:categories,id',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'image_info' => 'nullable|json'
+        ]);
+    
+        $product->update([
+            'name' => $request->name,
+            'price' => $request->price,
+            'stock' => $request->stock,
+        ]);
+    
+        $product->categories()->sync([$request->category]);
+    
+        if ($request->filled('image_info')) {
+            $imageInfo = json_decode($request->image_info, true);
+    
+            if ($product->image) {
+                Storage::delete($product->image->url);
+                $product->image->delete();
+            }
+    
+            $tmpPath = $imageInfo['path'];
+            $fileName = pathinfo($imageInfo['fileName'], PATHINFO_FILENAME);
+            $extension = pathinfo($imageInfo['fileName'], PATHINFO_EXTENSION);
+            $newFileName = md5($fileName . time()) . '.' . $extension;
+            $newPath = 'products/' . $newFileName;
+    
+            Storage::move($tmpPath, $newPath);
+    
+            $product->image()->create([
+                'url' => $newPath
+            ]);
+    
+            Storage::deleteDirectory(dirname($tmpPath));
+        }
+    
+        return redirect()->route('dashboard.products.index')->with('success', 'Producto actualizado exitosamente');
     }
 
     /**
@@ -80,5 +155,24 @@ class ProductController extends Controller
 
         $product->delete();
         return redirect()->route('dashboard.products.index')->with('success', 'Producto eliminado');
+    }
+
+    /* Upload files */
+    public function upload(Request $request)
+    {
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName = $file->getClientOriginalName();
+            $folder = uniqid() . '-' . now()->timestamp;
+            $path = $file->storeAs('products/tmp/' . $folder, $fileName);
+    
+            return [
+                'folder' => $folder,
+                'fileName' => $fileName,
+                'path' => $path
+            ];
+        }
+    
+        return '';
     }
 }

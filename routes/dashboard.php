@@ -14,3 +14,5 @@ Route::get('/components-accordion', function () {
 })->name('components-accordion');
 
 Route::resource('products', ProductController::class);
+
+Route::post('upload', [ProductController::class, 'upload'])->name('products.upload');

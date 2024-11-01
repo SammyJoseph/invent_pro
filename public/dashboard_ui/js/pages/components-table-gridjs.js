@@ -17,12 +17,6 @@ window.addEventListener("app:mounted", (function() {
                     return Gridjs.html('<span class="mx-2">'.concat(e, "</span>"))
                 }
             }, {
-                id: "name",
-                name: "Producto",
-                formatter: function(e) {
-                    return Gridjs.html('<span class="text-slate-700 dark:text-navy-100 font-medium">'.concat(e, "</span>"))
-                }
-            }, {
                 id: "image_url",
                 name: "Imagen",
                 sort: !1,
@@ -30,12 +24,24 @@ window.addEventListener("app:mounted", (function() {
                     return Gridjs.html('<div class="avatar flex">\n                                  <img class="rounded-full" src="'.concat(e, '" alt="imagen">\n                              </div>'))
                 }
             }, {
+                id: "name",
+                name: "Producto",
+                formatter: function(e) {
+                    return Gridjs.html('<span class="text-slate-700 dark:text-navy-100 font-medium">'.concat(e, "</span>"))
+                }
+            }, {
+                id: "category_names",
+                name: "Categorías"
+            }, {
                 id: "price",
-                name: "Precio"
+                name: "Precio",
+                formatter: function(e) {
+                    return Gridjs.html('<span>' + parseFloat(e).toFixed(2) + '</span>');
+                }
             }, {
                 id: "stock",
                 name: "Stock"
-            },             {
+            }, {
                 name: "Acciones",
                 sort: !1,
                 formatter: function(_, row) {

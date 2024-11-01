@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Crear Producto')
+@section('title', 'Editar Producto')
 
 @push('head')
         <script src="{{ asset('dashboard_ui/js/libs/forms.js') }}" defer></script>
@@ -11,7 +11,7 @@
     <main class="main-content w-full px-[var(--margin-x)] pb-8">
         <div class="flex items-center space-x-4 py-5 lg:py-6">
             <h2 class="text-xl font-medium text-slate-800 dark:text-navy-50 lg:text-2xl">
-                Crear Producto
+                Producto
             </h2>
             <div class="hidden h-full py-1 sm:flex">
                 <div class="h-full w-px bg-slate-300 dark:bg-navy-600"></div>
@@ -23,12 +23,13 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                     </svg>
                 </li>
-                <li>Crear Producto</li>
+                <li>Editar Producto <span class="italic">{{ $product->name }}</span></li>
             </ul>
         </div>
 
-        <form class="grid grid-cols-12 gap-4 sm:gap-5 lg:gap-6" method="POST" action="{{ route('dashboard.products.store') }}" enctype="multipart/form-data">
-            @include('products._partials.form', ['submitButtonText' => 'Guardar'])
+        <form class="grid grid-cols-12 gap-4 sm:gap-5 lg:gap-6" method="POST" action="{{ route('dashboard.products.update', $product) }}" enctype="multipart/form-data">
+            @method('PUT')
+            @include('products._partials.form', ['submitButtonText' => 'Actualizar'])
         </form>
     </main>
 @endsection
