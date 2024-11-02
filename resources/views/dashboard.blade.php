@@ -9,15 +9,83 @@
 @section('content')
     <!-- Main Content Wrapper -->
     <main class="main-content w-full pb-8">
-        <ul>
-            @foreach($categoryA as $product)
-                <li>
-                    {{ $product->name }} - 
-                    Sold: {{ $product->total_sold }} units, 
-                    Total Amount: ${{ number_format($product->total_amount, 2) }}
-                </li>
-            @endforeach
-        </ul>
+        <div class="grid grid-cols-1 gap-4 px-[var(--margin-x)] sm:grid-cols-3 sm:gap-5 lg:gap-6 mt-4">
+            <div class="card p-4">
+                <h4 class="mb-4 text-lg font-medium text-slate-700 dark:text-navy-100">
+                    Category A
+                </h4>
+                <div class="min-w-full overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b border-slate-200 dark:border-navy-500">
+                                <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Product</th>
+                                <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Sold</th>
+                                <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Profit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($categoryA->take(10) as $product)
+                                <tr class="border-b border-slate-100 dark:border-navy-500">
+                                    <td class="px-3 py-2 font-medium">{{ $product->name }}</td>
+                                    <td class="px-3 py-2">{{ $product->total_sold }}</td>
+                                    <td class="px-3 py-2">${{ number_format($product->total_profit, 2) }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card p-4">
+                <h4 class="mb-4 text-lg font-medium text-slate-700 dark:text-navy-100">
+                    Category B
+                </h4>
+                <div class="min-w-full overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b border-slate-200 dark:border-navy-500">
+                                <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Product</th>
+                                <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Sold</th>
+                                <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Profit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($categoryB->take(10) as $product)
+                                <tr class="border-b border-slate-100 dark:border-navy-500">
+                                    <td class="px-3 py-2 font-medium">{{ $product->name }}</td>
+                                    <td class="px-3 py-2">{{ $product->total_sold }}</td>
+                                    <td class="px-3 py-2">${{ number_format($product->total_profit, 2) }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card p-4">
+                <h4 class="mb-4 text-lg font-medium text-slate-700 dark:text-navy-100">
+                    Category C
+                </h4>
+                <div class="min-w-full overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b border-slate-200 dark:border-navy-500">
+                                <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Product</th>
+                                <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Sold</th>
+                                <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Profit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($categoryC->take(10) as $product)
+                                <tr class="border-b border-slate-100 dark:border-navy-500">
+                                    <td class="px-3 py-2 font-medium">{{ $product->name }}</td>
+                                    <td class="px-3 py-2">{{ $product->total_sold }}</td>
+                                    <td class="px-3 py-2">${{ number_format($product->total_profit, 2) }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
         <div class="mt-4 grid grid-cols-12 gap-4 px-[var(--margin-x)] transition-all duration-[.25s] sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6">
             <div class="col-span-12 lg:col-span-8">
                 <div class="flex items-center justify-between space-x-2">

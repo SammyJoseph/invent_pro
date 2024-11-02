@@ -22,12 +22,13 @@ class SaleSeeder extends Seeder
 
             foreach ($products as $product) {
                 $quantity = rand(1, 3);
-                $sale_price = $product->sale_price;
                 $purchase_price = $product->purchase_price;
+                $sale_price = $product->sale_price;
                 
                 $sale->products()->attach($product->id, [
                     'quantity' => $quantity,
-                    'price' => $sale_price
+                    'purchase_price' => $purchase_price,
+                    'sale_price' => $sale_price
                 ]);
                 
                 $total_amount += $quantity * $sale_price;

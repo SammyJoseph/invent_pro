@@ -14,8 +14,8 @@ class ImageSeeder extends Seeder
      */
     public function run(): void
     {
-        // Crear solo 2 imágenes (no una por cada producto (para mejorar la performance al ejecutar el seeder))
-        $baseImages = Image::factory()->count(10)->make();
+        // Crear solo 10 imágenes (no una por cada producto (para mejorar la performance al ejecutar el seeder))
+        $baseImages = Image::factory()->count(3)->make();
 
         $products = Product::all();
 

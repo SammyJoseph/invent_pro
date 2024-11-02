@@ -23,7 +23,7 @@ class ProductFactory extends Factory
             'name' => $this->faker->words(3, true),
             'description' => $this->faker->sentence(),
             'purchase_price' => $purchase_price,
-            'sale_price' => round($purchase_price * $markup_percentage, 2),
+            'sale_price' => round($purchase_price * $markup_percentage * 10, 0) / 10,
             'stock' => $this->faker->numberBetween(20, 200),
             'created_at' => now(),
             'updated_at' => now(),
