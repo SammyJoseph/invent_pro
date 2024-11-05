@@ -13,7 +13,7 @@
                             <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                                 Inicia sesión en tu cuenta
                             </h1>
-                            <form method="POST" action="{{ route('login') }}" class="space-y-4 md:space-y-6">
+                            <form method="POST" action="{{ route('login') }}" class="space-y-4 md:space-y-6" id="login-form">
                                 @csrf
                                 <div>
                                     <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
@@ -33,13 +33,25 @@
                                         </div>
                                     </div>
                                     @if (Route::has('password.request'))
-                                        <a href="{{ route('password.request') }}" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">¿Perdiste tu contraseña?</a>
+                                        <a href="{{ route('password.request') }}" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">¿Olvidaste tu contraseña?</a>
                                     @endif
                                 </div>
-                                <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Iniciar sesión</button>
-                                <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                                <x-validation-errors class="mb-4" />
+
+                                {{-- <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Iniciar sesión</button> --}}
+                                <button type="submit" id="submit-btn" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    <span id="btn-text">Iniciar sesión</span>
+                                    <span id="btn-loader" class="hidden">
+                                        <svg class="animate-spin -ml-1 mr-1 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        Cargando...
+                                    </span>
+                                </button>
+                                {{-- <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                                     ¿No estás registrado aún? <a href="{{ route('register') }}" class="font-medium text-blue-600 hover:underline dark:text-blue-500 underline">Crea tu cuenta aquí</a>
-                                </p>
+                                </p> --}}
                             </form>
                         </div>
                     </div>
@@ -52,50 +64,21 @@
         </div>
     </div>
 
-    {{-- <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
-
-        <x-validation-errors class="mb-4" />
-
-        @session('status')
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ $value }}
-            </div>
-        @endsession        
-
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-
-            <div>
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            </div>
-
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
-            </div>
-
-            <div class="block mt-4">
-                <label for="remember_me" class="flex items-center">
-                    <x-checkbox id="remember_me" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-button class="ms-4">
-                    {{ __('Log in') }}
-                </x-button>
-            </div>
-        </form>
-    </x-authentication-card> --}}
+    @push('js')
+        <script>
+            // Mensaje "cargando..." en el botón de inicio de sesión
+            document.addEventListener('DOMContentLoaded', function() {
+                const loginForm = document.getElementById('login-form');
+                const btnText = document.getElementById('btn-text');
+                const btnLoader = document.getElementById('btn-loader');
+                const submitBtn = document.getElementById('submit-btn');
+    
+                loginForm.addEventListener('submit', function() {
+                    btnText.classList.add('hidden');
+                    btnLoader.classList.remove('hidden');
+                    submitBtn.disabled = true;
+                });
+            });
+        </script>
+    @endpush
 </x-guest-layout>

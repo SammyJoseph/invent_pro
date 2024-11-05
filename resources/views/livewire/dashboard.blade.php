@@ -31,7 +31,7 @@
                         <tr class="border-b border-slate-200 dark:border-navy-500">
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Imagen</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Producto</th>
-                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">U. Vendidas</th>
+                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Unidades Vendidas</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Ganancia Total</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Stock</th>
                         </tr>
@@ -60,7 +60,7 @@
                         <tr class="border-b border-slate-200 dark:border-navy-500">
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Imagen</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Producto</th>
-                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">U. Vendidas</th>
+                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Unidades Vendidas</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Ganancia Total</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Stock</th>
                         </tr>
@@ -89,7 +89,7 @@
                         <tr class="border-b border-slate-200 dark:border-navy-500">
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Imagen</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Producto</th>
-                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">U. Vendidas</th>
+                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Unidades Vendidas</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Ganancia Total</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Stock</th>
                         </tr>
