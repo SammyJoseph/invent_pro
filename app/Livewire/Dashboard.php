@@ -17,8 +17,10 @@ class Dashboard extends Component
 
     public function mount()
     {
-        $this->startDate = Carbon::now()->subDays(30)->format('d-m-Y');
-        $this->endDate = Carbon::now()->subDays(15)->format('d-m-Y');
+        /* $this->startDate = Carbon::now()->subDays(30)->format('d-m-Y');
+        $this->endDate = Carbon::now()->subDays(15)->format('d-m-Y'); */
+        $this->startDate = Carbon::create(2024, 10, 1)->format('d-m-Y');
+        $this->endDate = Carbon::create(2024, 10, 31)->format('d-m-Y');
         $this->dateRange = $this->startDate . ' to ' . $this->endDate;
     }
 

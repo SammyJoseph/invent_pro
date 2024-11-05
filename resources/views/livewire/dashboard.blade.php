@@ -1,4 +1,4 @@
-<div>
+<div class="mt-16">
     <div class="grid grid-cols-1 gap-4 px-[var(--margin-x)] sm:grid-cols-3 sm:gap-5 lg:gap-6 mt-4">
         <label class="relative flex">
             <input x-data x-init="flatpickr($el, {
@@ -22,25 +22,27 @@
     </div>
     <div class="grid grid-cols-1 gap-4 px-[var(--margin-x)] sm:grid-cols-3 sm:gap-5 lg:gap-6 mt-4">
         <div class="card p-4">
-            <h4 class="mb-4 text-lg font-medium text-slate-700 dark:text-navy-100">
-                Category A
+            <h4 class="mb-4 text-lg font-medium text-green-600 dark:text-navy-100">
+                Categoría A
             </h4>
             <div class="min-w-full overflow-x-auto">
                 <table class="w-full text-left">
                     <thead>
                         <tr class="border-b border-slate-200 dark:border-navy-500">
-                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Product</th>
-                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Sold</th>
-                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Profit</th>
+                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Imagen</th>
+                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Producto</th>
+                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Unid. Vendidas</th>
+                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Ganancia Total</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Stock</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($categoryA->take(10) as $product)
                             <tr class="border-b border-slate-100 dark:border-navy-500">
-                                <td class="px-3 py-2 font-medium">{{ $product->name }}</td>
+                                <td class="px-3 py-2"><img class="rounded-full w-10 h-10" src="{{ $product->image->url === 'products/' ? asset('images/no-image.png') : Storage::url($product->image->url) }}" alt=""></td>
+                                <td class="px-3 py-2 font-medium"><a class="hover:underline" href="{{ route('dashboard.products.edit', $product) }}">{{ $product->name }}</a></td>
                                 <td class="px-3 py-2">{{ $product->total_sold }}</td>
-                                <td class="px-3 py-2">${{ number_format($product->total_profit, 2) }}</td>
+                                <td class="px-3 py-2">{{ number_format($product->total_profit, 2) }}</td>
                                 <td class="px-3 py-2">{{ $product->stock }}</td>
                             </tr>
                         @endforeach
@@ -49,25 +51,27 @@
             </div>
         </div>
         <div class="card p-4">
-            <h4 class="mb-4 text-lg font-medium text-slate-700 dark:text-navy-100">
-                Category B
+            <h4 class="mb-4 text-lg font-medium text-orange-500 dark:text-navy-100">
+                Categoría B
             </h4>
             <div class="min-w-full overflow-x-auto">
                 <table class="w-full text-left">
                     <thead>
                         <tr class="border-b border-slate-200 dark:border-navy-500">
-                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Product</th>
-                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Sold</th>
-                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Profit</th>
+                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Imagen</th>
+                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Producto</th>
+                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Unid. Vendidas</th>
+                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Ganancia Total</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Stock</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($categoryB->take(10) as $product)
                             <tr class="border-b border-slate-100 dark:border-navy-500">
-                                <td class="px-3 py-2 font-medium">{{ $product->name }}</td>
+                                <td class="px-3 py-2"><img class="rounded-full w-10 h-10" src="{{ $product->image->url === 'products/' ? asset('images/no-image.png') : Storage::url($product->image->url) }}" alt=""></td>
+                                <td class="px-3 py-2 font-medium"><a class="hover:underline" href="{{ route('dashboard.products.edit', $product) }}">{{ $product->name }}</a></td>
                                 <td class="px-3 py-2">{{ $product->total_sold }}</td>
-                                <td class="px-3 py-2">${{ number_format($product->total_profit, 2) }}</td>
+                                <td class="px-3 py-2">{{ number_format($product->total_profit, 2) }}</td>
                                 <td class="px-3 py-2">{{ $product->stock }}</td>
                             </tr>
                         @endforeach
@@ -76,25 +80,27 @@
             </div>
         </div>
         <div class="card p-4">
-            <h4 class="mb-4 text-lg font-medium text-slate-700 dark:text-navy-100">
-                Category C
+            <h4 class="mb-4 text-lg font-medium text-red-600 dark:text-navy-100">
+                Categoría C
             </h4>
             <div class="min-w-full overflow-x-auto">
                 <table class="w-full text-left">
                     <thead>
                         <tr class="border-b border-slate-200 dark:border-navy-500">
-                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Product</th>
-                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Sold</th>
-                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Profit</th>
+                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Imagen</th>
+                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Producto</th>
+                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Unid. Vendidas</th>
+                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Ganancia Total</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Stock</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($categoryC->take(10) as $product)
                             <tr class="border-b border-slate-100 dark:border-navy-500">
-                                <td class="px-3 py-2 font-medium">{{ $product->name }}</td>
+                                <td class="px-3 py-2"><img class="rounded-full w-10 h-10" src="{{ $product->image->url === 'products/' ? asset('images/no-image.png') : Storage::url($product->image->url) }}" alt=""></td>
+                                <td class="px-3 py-2 font-medium"><a class="hover:underline" href="{{ route('dashboard.products.edit', $product) }}">{{ $product->name }}</a></td>
                                 <td class="px-3 py-2">{{ $product->total_sold }}</td>
-                                <td class="px-3 py-2">${{ number_format($product->total_profit, 2) }}</td>
+                                <td class="px-3 py-2">{{ number_format($product->total_profit, 2) }}</td>
                                 <td class="px-3 py-2">{{ $product->stock }}</td>
                             </tr>
                         @endforeach
