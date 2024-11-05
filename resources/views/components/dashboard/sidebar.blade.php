@@ -80,7 +80,7 @@
                                       {{ Auth::user()->name }}
                                     </span>
                                     <p class="text-xs text-slate-400 dark:text-navy-300">
-                                        Programador Web
+                                        Administrador
                                     </p>
                                 </div>
                             </div>

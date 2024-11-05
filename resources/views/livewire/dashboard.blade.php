@@ -31,7 +31,7 @@
                         <tr class="border-b border-slate-200 dark:border-navy-500">
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Imagen</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Producto</th>
-                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Unid. Vendidas</th>
+                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">U. Vendidas</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Ganancia Total</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Stock</th>
                         </tr>
@@ -39,7 +39,7 @@
                     <tbody>
                         @foreach ($categoryA->take(10) as $product)
                             <tr class="border-b border-slate-100 dark:border-navy-500">
-                                <td class="px-3 py-2"><img class="rounded-full w-10 h-10" src="{{ $product->image->url === 'products/' ? asset('images/no-image.png') : Storage::url($product->image->url) }}" alt=""></td>
+                                <td class="px-3 py-2"><img class="rounded-full w-10 h-10 object-cover" src="{{ $product->image->url === 'products/' ? asset('images/no-image.png') : Storage::url($product->image->url) }}" alt=""></td>
                                 <td class="px-3 py-2 font-medium"><a class="hover:underline" href="{{ route('dashboard.products.edit', $product) }}">{{ $product->name }}</a></td>
                                 <td class="px-3 py-2">{{ $product->total_sold }}</td>
                                 <td class="px-3 py-2">{{ number_format($product->total_profit, 2) }}</td>
@@ -60,7 +60,7 @@
                         <tr class="border-b border-slate-200 dark:border-navy-500">
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Imagen</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Producto</th>
-                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Unid. Vendidas</th>
+                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">U. Vendidas</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Ganancia Total</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Stock</th>
                         </tr>
@@ -68,7 +68,7 @@
                     <tbody>
                         @foreach ($categoryB->take(10) as $product)
                             <tr class="border-b border-slate-100 dark:border-navy-500">
-                                <td class="px-3 py-2"><img class="rounded-full w-10 h-10" src="{{ $product->image->url === 'products/' ? asset('images/no-image.png') : Storage::url($product->image->url) }}" alt=""></td>
+                                <td class="px-3 py-2"><img class="rounded-full w-10 h-10 object-cover" src="{{ $product->image->url === 'products/' ? asset('images/no-image.png') : Storage::url($product->image->url) }}" alt=""></td>
                                 <td class="px-3 py-2 font-medium"><a class="hover:underline" href="{{ route('dashboard.products.edit', $product) }}">{{ $product->name }}</a></td>
                                 <td class="px-3 py-2">{{ $product->total_sold }}</td>
                                 <td class="px-3 py-2">{{ number_format($product->total_profit, 2) }}</td>
@@ -89,7 +89,7 @@
                         <tr class="border-b border-slate-200 dark:border-navy-500">
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Imagen</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Producto</th>
-                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Unid. Vendidas</th>
+                            <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">U. Vendidas</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Ganancia Total</th>
                             <th class="px-3 py-2 font-semibold text-slate-800 dark:text-navy-100">Stock</th>
                         </tr>
@@ -97,7 +97,7 @@
                     <tbody>
                         @foreach ($categoryC->take(10) as $product)
                             <tr class="border-b border-slate-100 dark:border-navy-500">
-                                <td class="px-3 py-2"><img class="rounded-full w-10 h-10" src="{{ $product->image->url === 'products/' ? asset('images/no-image.png') : Storage::url($product->image->url) }}" alt=""></td>
+                                <td class="px-3 py-2"><img class="rounded-full w-10 h-10 object-cover" src="{{ $product->image->url === 'products/' ? asset('images/no-image.png') : Storage::url($product->image->url) }}" alt=""></td>
                                 <td class="px-3 py-2 font-medium"><a class="hover:underline" href="{{ route('dashboard.products.edit', $product) }}">{{ $product->name }}</a></td>
                                 <td class="px-3 py-2">{{ $product->total_sold }}</td>
                                 <td class="px-3 py-2">{{ number_format($product->total_profit, 2) }}</td>
