@@ -42,7 +42,8 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'category' => 'required|exists:categories,id',
-            'price' => 'required|numeric|min:0',
+            'purchase_price' => 'required|numeric|min:0',
+            'sale_price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'image_info' => 'required|json'
         ]);
@@ -51,7 +52,8 @@ class ProductController extends Controller
     
         $product = Product::create([
             'name' => $request->name,
-            'price' => $request->price,
+            'purchase_price' => $request->purchase_price,
+            'sale_price' => $request->sale_price,
             'stock' => $request->stock,
         ]);
     
@@ -103,14 +105,16 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'category' => 'required|exists:categories,id',
-            'price' => 'required|numeric|min:0',
+            'purchase_price' => 'required|numeric|min:0',
+            'sale_price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'image_info' => 'nullable|json'
         ]);
     
         $product->update([
             'name' => $request->name,
-            'price' => $request->price,
+            'purchase_price' => $request->purchase_price,
+            'sale_price' => $request->sale_price,
             'stock' => $request->stock,
         ]);
     

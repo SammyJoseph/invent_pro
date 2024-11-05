@@ -33,8 +33,14 @@ window.addEventListener("app:mounted", (function() {
                 id: "category_names",
                 name: "Categorías"
             }, {
-                id: "price",
-                name: "Precio",
+                id: "purchase_price",
+                name: "Precio Compra",
+                formatter: function(e) {
+                    return Gridjs.html('<span>' + parseFloat(e).toFixed(2) + '</span>');
+                }
+            }, {
+                id: "sale_price",
+                name: "Precio Venta",
                 formatter: function(e) {
                     return Gridjs.html('<span>' + parseFloat(e).toFixed(2) + '</span>');
                 }

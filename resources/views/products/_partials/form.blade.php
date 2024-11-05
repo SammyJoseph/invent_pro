@@ -12,6 +12,22 @@
             </div>
         </div>
         <div class="space-y-4 p-4 sm:p-5">
+            <div>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li class="text-red-500 text-xs">
+                                    <svg class="w-3 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
+                                        <path d="M480-120q-33 0-56.5-23.5T400-200q0-33 23.5-56.5T480-280q33 0 56.5 23.5T560-200q0 33-23.5 56.5T480-120Zm-80-240v-480h160v480H400Z"/>
+                                    </svg>
+                                    {{ $error }}
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
             <label class="block">
                 <span>Nombre</span>
                 <input name="name"
@@ -19,25 +35,33 @@
                     placeholder="Escribe el nombre del producto" type="text" value="{{ old('name', $product->name ?? '') }}" />
             </label>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <label class="block">
-                    <span>Categoría</span>
-                    <select id="category" class="mt-1.5 w-full" name="category">
-                        <option value="">Seleccionar</option>
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}" 
-                                {{ (is_array(old('categories')) && in_array($category->id, old('categories'))) || 
-                                (isset($product) && $product->categories->contains($category->id)) ? 'selected' : '' }}>
-                                {{ $category->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </label>
+                <div class="grid grid-cols-2 gap-4"> 
+                    <label class="block">
+                        <span>Categoría</span>
+                        <select id="category" class="mt-1.5 w-full" name="category">
+                            <option value="">Seleccionar</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}" 
+                                    {{ (is_array(old('categories')) && in_array($category->id, old('categories'))) || 
+                                    (isset($product) && $product->categories->contains($category->id)) ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </label>
+                    <label class="block">
+                        <span>Precio Compra</span>
+                        <input name="purchase_price"
+                            class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                            placeholder="0.00" type="number" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" value="{{ old('purchase_price', $product->purchase_price ?? '') }}" />
+                    </label>
+                </div>
                 <div class="grid grid-cols-2 gap-4">                                
                     <label class="block">
-                        <span>Precio</span>
-                        <input name="price"
+                        <span>Precio Venta</span>
+                        <input name="sale_price"
                             class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                            placeholder="0.00" type="number" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" value="{{ old('price', $product->price ?? '') }}" />
+                            placeholder="0.00" type="number" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" value="{{ old('sale_price', $product->sale_price ?? '') }}" />
                     </label>
                     <label class="block">
                         <span>Stock</span>
