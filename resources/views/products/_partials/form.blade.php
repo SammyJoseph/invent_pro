@@ -28,14 +28,22 @@
                     </div>
                 @endif
             </div>
-            <label class="block">
-                <span>Nombre</span>
-                <input name="name"
-                    class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                    placeholder="Escribe el nombre del producto" type="text" value="{{ old('name', $product->name ?? '') }}" />
-            </label>
+            <div class="grid grid-cols-6 gap-4">
+                <label class="block col-span-6 sm:col-span-4">
+                    <span>Nombre</span>
+                    <input name="name"
+                        class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                        placeholder="Escribe el nombre del producto" type="text" value="{{ old('name', $product->name ?? '') }}" />
+                </label>
+                <label class="block col-span-6 sm:col-span-2">
+                    <span>Código de barras</span>
+                    <input name="barcode"
+                        class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                        placeholder="123456789" type="text" value="{{ old('barcode', $product->barcode ?? '') }}" />
+                </label>
+            </div>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div class="grid grid-cols-2 gap-4"> 
+                <div class="grid grid-cols-2 gap-4">
                     <label class="block">
                         <span>Categoría</span>
                         <select id="category" class="mt-1.5 w-full" name="category">

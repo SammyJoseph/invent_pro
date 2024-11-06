@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('purchase_price', 10, 2);
             $table->decimal('sale_price', 10, 2);
             $table->unsignedSmallInteger('stock');
+            $table->string('barcode');
 
             $table->timestamps();
         });

@@ -25,6 +25,7 @@ class ProductFactory extends Factory
             'purchase_price' => $purchase_price,
             'sale_price' => round($purchase_price * $markup_percentage * 10, 0) / 10,
             'stock' => $this->faker->numberBetween(20, 200),
+            'barcode' => $this->faker->ean13(),
             'created_at' => now(),
             'updated_at' => now(),
         ];

@@ -45,6 +45,7 @@ class ProductController extends Controller
             'purchase_price' => 'required|numeric|min:0',
             'sale_price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
+            'barcode' => 'required|string|unique:products',
             'image_info' => 'required|json'
         ]);
     
@@ -55,6 +56,7 @@ class ProductController extends Controller
             'purchase_price' => $request->purchase_price,
             'sale_price' => $request->sale_price,
             'stock' => $request->stock,
+            'barcode' => $request->barcode,
         ]);
     
         $product->categories()->attach($request->category);
@@ -108,6 +110,7 @@ class ProductController extends Controller
             'purchase_price' => 'required|numeric|min:0',
             'sale_price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
+            'barcode' => 'required|string|unique:products',
             'image_info' => 'nullable|json'
         ]);
     
@@ -116,6 +119,7 @@ class ProductController extends Controller
             'purchase_price' => $request->purchase_price,
             'sale_price' => $request->sale_price,
             'stock' => $request->stock,
+            'barcode' => $request->barcode,
         ]);
     
         $product->categories()->sync([$request->category]);
