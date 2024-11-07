@@ -32,10 +32,10 @@ class SaleController extends Controller
             'total_amount' => 'required|numeric|min:0',
         ]);
     
-        Log::info('Datos recibidos para registrar venta', [
+        /* Log::info('Datos recibidos para registrar venta', [
             'products' => $request->products,
             'total_amount' => $request->total_amount
-        ]);
+        ]); */
     
         try {
             DB::beginTransaction();
@@ -62,7 +62,7 @@ class SaleController extends Controller
                 ];
             }
     
-            Log::info('Detalles de los productos para la venta', ['products' => $productDetails]);
+            // Log::info('Detalles de los productos para la venta', ['products' => $productDetails]);
     
             $sale = Sale::create([
                 'sale_date' => now(),
@@ -81,7 +81,6 @@ class SaleController extends Controller
                     'purchase_price' => Product::find($productData['id'])->purchase_price
                 ]);
     
-                // Actualizar stock
                 $product = Product::find($productData['id']);
                 $product->stock -= $productData['quantity'];
                 $product->save();
