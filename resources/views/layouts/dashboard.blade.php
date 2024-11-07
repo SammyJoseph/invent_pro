@@ -37,6 +37,7 @@
         @livewireStyles
 
         @stack('head')
+        @stack('styles')
     </head>
     <body class="is-header-blur @yield('body-class')">
         <!-- App preloader-->

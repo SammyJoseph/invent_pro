@@ -17,3 +17,4 @@ Route::resource('products', ProductController::class);
 Route::post('upload', [ProductController::class, 'upload'])->name('products.upload');
 
 Route::get('sales', [SaleController::class, 'index'])->name('sales.index');
+Route::post('sales', [SaleController::class, 'store'])->name('sales.store');
