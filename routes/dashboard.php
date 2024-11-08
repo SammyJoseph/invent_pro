@@ -15,4 +15,4 @@ Route::get('/components-accordion', function () {
 Route::resource('products', ProductController::class);
 Route::post('upload', [ProductController::class, 'upload'])->name('products.upload'); // plugin de imágenes
 
-Route::resource('sales', SaleController::class);
+Route::resource('sales', SaleController::class)->except('update', 'destroy');

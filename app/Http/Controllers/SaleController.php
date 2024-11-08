@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Sale;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -13,7 +14,9 @@ class SaleController extends Controller
 {
     public function index()
     {
-        return view('sales.index');
+        $sales = Sale::orderBy('sale_date', 'desc')->get();
+    
+        return view('sales.index', compact('sales'));
     }
 
     public function create()
@@ -29,8 +32,9 @@ class SaleController extends Controller
 
     public function store(Request $request)
     {
-        Log::info('Datos completos de la solicitud:', $request->all());
-        Log::info('Valor de sale_date:', ['sale_date' => $request->sale_date]);
+        /* Log::info('Datos completos de la solicitud:', $request->all());
+        Log::info('Valor de sale_date:', ['sale_date' => $request->sale_date]); */
+
         $request->validate([
             'products' => 'required|array',
             'products.*.id' => 'required|exists:products,id',
@@ -106,13 +110,13 @@ class SaleController extends Controller
     
             DB::commit();
     
-            Log::info('Venta registrada con éxito', [
+            /* Log::info('Venta registrada con éxito', [
                 'sale_id' => $sale->id, 
                 'sale_date' => $sale->sale_date,
                 'total_amount' => $sale->total_amount,
                 'total_cost' => $sale->total_cost,
                 'total_profit' => $sale->total_profit
-            ]);
+            ]); */
     
             return response()->json([
                 'success' => true,
@@ -134,5 +138,10 @@ class SaleController extends Controller
                 'message' => 'Error al procesar la venta: ' . $e->getMessage()
             ], 500);
         }
+    }
+
+    public function show(Sale $sale)
+    {
+        return view('sales.show', compact('sale'));
     }
 }

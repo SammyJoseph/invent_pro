@@ -116,15 +116,19 @@ document.getElementById('register-sale').addEventListener('click', function(e) {
     }
 
     let saleDateTime = document.getElementById('sale-datetime').value;
-    if (!saleDateTime) {
+
+    /* Fecha y hora */
+    if (!saleDateTime) { // si no se seleccionó, usar la fecha y hora actual
         saleDateTime = new Date();
-    } else {
+    } else { // si se seleccionó, parsear la fecha y hora de d-m-Y H:i:s a Y-m-d H:i:s
+        const [datePart, timePart] = saleDateTime.split(' ');
+        const [day, month, year] = datePart.split('-');
+        saleDateTime = `${year}-${month}-${day} ${timePart}`;
         saleDateTime = new Date(saleDateTime);
     }
-
-    saleDateTime.setHours(saleDateTime.getHours() - 5);
-    saleDateTime = saleDateTime.toISOString().slice(0, 19).replace('T', ' ');
-
+    saleDateTime.setHours(saleDateTime.getHours() - 5); // GMT-5
+    saleDateTime = saleDateTime.toISOString().slice(0, 19).replace('T', ' '); 
+    
     const saleData = {
         products: cart.map(item => ({
             id: item.id,

@@ -10,7 +10,7 @@
 
 @section('content')
     <main class="main-content w-full px-[var(--margin-x)] pb-8">
-        <div class="flex justify-between items-center">
+        <div class="max-w-7xl flex justify-between items-center">
             <div class="flex items-center space-x-4 py-5 lg:py-6">
                 <h2 class="text-xl font-medium text-slate-800 dark:text-navy-50 lg:text-2xl">
                     Ventas
@@ -30,10 +30,15 @@
                     <li>Generar Ventas</li>
                 </ul>
             </div>
+            <div>
+                <a href="{{ route('dashboard.sales.index') }}" class="btn bg-info font-medium text-white hover:bg-info-focus focus:bg-info-focus active:bg-info-focus/90">
+                    Lista de ventas
+                </a>
+            </div>
         </div>
         <section
             class=" relative z-10 after:contents-[''] after:absolute after:z-0 after:h-full xl:after:w-1/3 after:top-0 after:right-0 after:bg-gray-50">
-            <div class="w-full max-w-7xl px-4 md:px-5 lg-6 relative z-10">
+            <div class="w-full max-w-7xl lg-6 relative z-10">
                 <div class="grid grid-cols-12">
                     {{-- Columna 1 --}}
                     <div class="col-span-12 xl:col-span-8 lg:pr-8 pt-8 pb-8 w-full max-xl:max-w-3xl max-xl:mx-auto">
@@ -63,49 +68,53 @@
                     {{-- Colunmna 2 --}}
                     <div
                         class=" col-span-12 xl:col-span-4 bg-gray-50 w-full max-xl:px-6 max-w-3xl xl:max-w-lg mx-auto lg:pl-8 py-8">
-                        <label class="relative flex">
-                            <input id="sale-datetime" x-init="$el._x_flatpickr = flatpickr($el, { 
-                                enableTime: true, 
-                                defaultDate: new Date() 
-                            })"
-                                class="bg-white form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                placeholder="Seleccionar fecha y hora" type="text" />
-                            <span
-                                class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor" stroke-width="1.5">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        <label class="flex items-center mb-1.5 text-gray-400 text-sm font-medium">Código de Barras</label>
+                        <div class="flex pb-4 w-full">
+                            <div class="relative w-full ">
+                                <div class=" absolute left-0 top-0 py-2.5 px-4 text-gray-300"></div>
+                                <input type="text" id="barcode_search"
+                                    class="block w-full h-11 pr-11 pl-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-white border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-gray-400"
+                                    placeholder="123456789">
+                            </div>
+                        </div>
+                        <div class="flex items-center border-b border-gray-200">
+                            <button type="button"
+                                class="rounded-lg w-full bg-black py-2.5 px-4 text-white text-sm font-semibold text-center mb-8 transition-all duration-500 hover:bg-black/80">
+                                Buscar
+                                <svg class="w-5 inline-block -mt-0.5" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 -960 960 960" fill="#fff">
+                                    <path
+                                        d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
                                 </svg>
-                            </span>
-                        </label>
+                            </button>
+                        </div>
                         <div class="mt-8">
                             <div class="flex items-center justify-between pb-6">
                                 <p class="total_items font-normal text-lg leading-8 text-black">0 Items</p>
                                 <p class="total_amount font-medium text-lg leading-8 text-black">S/0.00</p>
                             </div>
                             <div>
-                                <label class="flex items-center mb-1.5 text-gray-400 text-sm font-medium">Código de
-                                    Barras</label>
-                                <div class="flex pb-4 w-full">
-                                    <div class="relative w-full ">
-                                        <div class=" absolute left-0 top-0 py-2.5 px-4 text-gray-300"></div>
-                                        <input type="text" id="barcode_search"
-                                            class="block w-full h-11 pr-11 pl-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-white border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-gray-400"
-                                            placeholder="123456789">
-                                    </div>
+                                <div class="border-b border-gray-200">
+                                    <label class="flex items-center mb-1.5 text-gray-400 text-sm font-medium">Fecha y hora de venta</label>
+                                    <label class="relative flex mb-8">
+                                        <input id="sale-datetime" x-init="$el._x_flatpickr = flatpickr($el, { 
+                                            enableTime: true, 
+                                            defaultDate: new Date(),
+                                            dateFormat: 'd-m-Y H:i'
+                                        })"
+                                            class="bg-white form-input peer w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 pl-9 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                            placeholder="Seleccionar fecha y hora" type="text" />
+                                        <span
+                                            class="pointer-events-none absolute flex h-full w-10 items-center justify-center text-slate-400 peer-focus:text-primary dark:text-navy-300 dark:peer-focus:text-accent">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24"
+                                                stroke="currentColor" stroke-width="1.5">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                            </svg>
+                                        </span>
+                                    </label>
                                 </div>
-                                <div class="flex items-center border-b border-gray-200">
-                                    <button type="button"
-                                        class="rounded-lg w-full bg-black py-2.5 px-4 text-white text-sm font-semibold text-center mb-8 transition-all duration-500 hover:bg-black/80">
-                                        Buscar
-                                        <svg class="w-5 inline-block -mt-0.5" xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 -960 960 960" fill="#fff">
-                                            <path
-                                                d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
-                                        </svg>
-                                    </button>
-                                </div>
+
                                 <div class="flex items-center justify-between py-8">
                                     <p class="total_items font-medium text-xl leading-8 text-black">0 Items</p>
                                     <p class="total_amount font-semibold text-xl leading-8 text-indigo-600">S/0.00</p>
@@ -194,6 +203,10 @@
     <script>
         window.productsData = @json($products);
         window.salesStoreUrl = "{{ route('dashboard.sales.store') }}";
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('barcode_search').focus();
+        });
     </script>
     <script src="{{ asset('js/sales-cart.js') }}"></script>
 @endpush
