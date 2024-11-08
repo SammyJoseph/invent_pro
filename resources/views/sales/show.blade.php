@@ -25,8 +25,31 @@
                 </ul>
             </div>
         </div>
-        <div>
-            {{ $sale }}
+        <div class="mt-4">
+            <table class="min-w-full bg-white border border-gray-300">
+                <thead>
+                    <tr class="text-left">
+                        <th class="py-2 px-4 border-b">Producto</th>
+                        <th class="py-2 px-4 border-b">Cantidad</th>
+                        <th class="py-2 px-4 border-b">Precio de compra Unidad</th>
+                        <th class="py-2 px-4 border-b">Precio de venta Unidad</th>
+                        <th class="py-2 px-4 border-b">Ganancia Unidad</th>
+                        <th class="py-2 px-4 border-b">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($sale->products as $sale_detail)
+                        <tr>
+                            <td class="py-2 px-4 border-b">{{ $sale_detail->name }}</td>
+                            <td class="py-2 px-4 border-b">{{ $sale_detail->pivot->quantity }}</td>
+                            <td class="py-2 px-4 border-b">{{ number_format($sale_detail->pivot->purchase_price, 2) }}</td>
+                            <td class="py-2 px-4 border-b">{{ number_format($sale_detail->pivot->sale_price, 2) }}</td>
+                            <td class="py-2 px-4 border-b">{{ number_format($sale_detail->pivot->sale_price - $sale_detail->pivot->purchase_price, 2) }}</td>
+                            <td class="py-2 px-4 border-b">{{ number_format($sale_detail->pivot->quantity * $sale_detail->pivot->sale_price, 2) }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </main>
 @endsection
