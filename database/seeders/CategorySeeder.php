@@ -13,6 +13,31 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::factory()->count(30)->create();
+        $categories = [
+            'Snacks',
+            'Gaseosas',
+            'Aguas y Bebidas',
+            'Lácteos',
+            'Carnes y Embutidos',
+            'Frutas y Verduras',
+            'Panadería',
+            'Cerveza y Licores',
+            'Productos de Limpieza',
+            'Cuidado Personal',
+            'Congelados',
+            'Cereales y Granos',
+            'Enlatados',
+            'Condimentos y Especias',
+            'Dulces y Confitería',
+            'Productos para Bebés',
+            'Mascotas',
+            'Productos de Papel',
+            'Productos Importados',
+            'Productos Veganos'
+        ];
+    
+        foreach ($categories as $category) {
+            Category::create(['name' => $category]);
+        }
     }
 }

@@ -41,6 +41,8 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'net_content' => 'required|numeric|min:0',
+            'unit_of_measure' => 'required|string|max:255',
             'category' => 'required|exists:categories,id',
             'purchase_price' => 'required|numeric|min:0',
             'sale_price' => 'required|numeric|min:0',
@@ -53,6 +55,8 @@ class ProductController extends Controller
     
         $product = Product::create([
             'name' => $request->name,
+            'net_content' => $request->net_content,
+            'unit_of_measure' => $request->unit_of_measure,
             'purchase_price' => $request->purchase_price,
             'sale_price' => $request->sale_price,
             'stock' => $request->stock,
@@ -106,16 +110,20 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'net_content' => 'required|numeric|min:0',
+            'unit_of_measure' => 'required|string|max:255',
             'category' => 'required|exists:categories,id',
             'purchase_price' => 'required|numeric|min:0',
             'sale_price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'barcode' => 'required|string|unique:products',
+            'barcode' => 'required|string|unique:products,barcode,' . $product->id,
             'image_info' => 'nullable|json'
         ]);
     
         $product->update([
             'name' => $request->name,
+            'net_content' => $request->net_content,
+            'unit_of_measure' => $request->unit_of_measure,
             'purchase_price' => $request->purchase_price,
             'sale_price' => $request->sale_price,
             'stock' => $request->stock,

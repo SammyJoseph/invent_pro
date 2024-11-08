@@ -14,7 +14,7 @@ class SaleSeeder extends Seeder
      */
     public function run(): void
     {
-        Sale::factory()->count(200)->create()->each(function ($sale) {            
+        Sale::factory()->count(500)->create()->each(function ($sale) {            
             $products = Product::inRandomOrder()->take(rand(1, 5))->get()->unique('id');
             
             $total_amount = 0;

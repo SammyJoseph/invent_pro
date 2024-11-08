@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             
             $table->string('name');
+            $table->decimal('net_content', 10, 2);
+            $table->string('unit_of_measure', 10);
             $table->text('description')->nullable();
             $table->decimal('purchase_price', 10, 2);
             $table->decimal('sale_price', 10, 2);
