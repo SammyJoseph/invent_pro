@@ -43,6 +43,9 @@ window.addEventListener("app:mounted", (function() {
                     return Gridjs.html('<span>' + parseFloat(e).toFixed(2) + '</span>');
                 }
             }, {
+                id: "units_sold",
+                name: "Unidades vendidas"
+            }, {
                 id: "payment_method",
                 name: "Método de pago"
             }, {

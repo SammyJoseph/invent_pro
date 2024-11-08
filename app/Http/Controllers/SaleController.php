@@ -14,7 +14,11 @@ class SaleController extends Controller
 {
     public function index()
     {
-        $sales = Sale::orderBy('sale_date', 'desc')->get();
+        $sales = Sale::with('products')->orderBy('sale_date', 'desc')->get();
+        $sales = $sales->map(function ($sale) {
+            $sale->units_sold = $sale->products->sum('pivot.quantity');
+            return $sale;
+        });
     
         return view('sales.index', compact('sales'));
     }
