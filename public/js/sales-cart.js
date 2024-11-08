@@ -41,38 +41,38 @@ function updateCartDisplay() {
         const itemElement = document.createElement('div');
         itemElement.className =
             'flex flex-col min-[500px]:flex-row min-[500px]:items-center gap-5 py-6 border-b border-gray-200 group';
-        itemElement.innerHTML = `
-            <div class="w-full md:max-w-[126px]">
-                <img src="${item.image_url || 'https://via.placeholder.com/126'}" alt="${item.name}" class="mx-auto rounded-xl object-cover">
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-4 w-full">
-                <div class="md:col-span-2">
-                    <div class="flex flex-col max-[500px]:items-center gap-3">
-                        <h6 class="font-semibold text-base leading-7 text-black">${item.name}</h6>
-                        <h6 class="font-normal text-base leading-7 text-gray-500">${item.categories.map(cat => cat.name).join(', ')}</h6>
-                        <h6 class="font-medium text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-indigo-600">S/.${(Number(item.sale_price) || 0).toFixed(2)}</h6>
+            itemElement.innerHTML = `
+                <div class="w-full md:max-w-[126px]">
+                    <img src="${item.image_url || 'https://via.placeholder.com/126'}" alt="${item.name}" class="mx-auto rounded-xl object-cover">
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 w-full">
+                    <div class="md:col-span-2">
+                        <div class="flex flex-col max-[500px]:items-center gap-3">
+                            <h6 class="font-semibold text-base leading-7 text-black">${item.name}</h6>
+                            <h6 class="font-normal text-base leading-7 text-gray-500">${item.categories.map(cat => cat.name).join(', ')}</h6>
+                            <h6 class="font-medium text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-indigo-600">S/.${(Number(item.sale_price) || 0).toFixed(2)}</h6>
+                        </div>
+                    </div>
+                    <div class="flex items-center max-[500px]:justify-center h-full max-md:mt-3">
+                        <div class="flex items-center h-full">
+                            <button onclick="updateQuantity(${item.id}, -1)" class="group rounded-l-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300">
+                                <svg class="stroke-gray-900 transition-all duration-500 group-hover:stroke-black" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                    <path d="M16.5 11H5.5" stroke="" stroke-width="1.6" stroke-linecap="round" />
+                                </svg>
+                            </button>
+                            <input type="text" value="${item.quantity}" class="border-y border-gray-200 outline-none text-gray-900 font-semibold text-lg w-full max-w-[73px] min-w-[60px] placeholder:text-gray-900 py-[15px] text-center bg-transparent">
+                            <button onclick="updateQuantity(${item.id}, 1)" class="group rounded-r-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300 z-10">
+                                <svg class="stroke-gray-900 transition-all duration-500 group-hover:stroke-black" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                    <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" stroke-width="1.6" stroke-linecap="round" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex items-center max-[500px]:justify-center md:justify-end max-md:mt-3 h-full">
+                        <p class="font-bold text-lg leading-8 text-gray-600 text-center transition-all duration-300 group-hover:text-indigo-600">S/.${Number((item.sale_price * item.quantity) || 0).toFixed(2)}</p>
                     </div>
                 </div>
-                <div class="flex items-center max-[500px]:justify-center h-full max-md:mt-3">
-                    <div class="flex items-center h-full">
-                        <button onclick="updateQuantity(${item.id}, -1)" class="group rounded-l-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300">
-                            <svg class="stroke-gray-900 transition-all duration-500 group-hover:stroke-black" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                                <path d="M16.5 11H5.5" stroke="" stroke-width="1.6" stroke-linecap="round" />
-                            </svg>
-                        </button>
-                        <input type="text" value="${item.quantity}" class="border-y border-gray-200 outline-none text-gray-900 font-semibold text-lg w-full max-w-[73px] min-w-[60px] placeholder:text-gray-900 py-[15px] text-center bg-transparent">
-                        <button onclick="updateQuantity(${item.id}, 1)" class="group rounded-r-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300 z-10">
-                            <svg class="stroke-gray-900 transition-all duration-500 group-hover:stroke-black" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                                <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" stroke-width="1.6" stroke-linecap="round" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-                <div class="flex items-center max-[500px]:justify-center md:justify-end max-md:mt-3 h-full">
-                    <p class="font-bold text-lg leading-8 text-gray-600 text-center transition-all duration-300 group-hover:text-indigo-600">S/.${Number((item.sale_price * item.quantity) || 0).toFixed(2)}</p>
-                </div>
-            </div>
-        `;
+            `;
         cartContainer.appendChild(itemElement);
     });
 
@@ -115,13 +115,24 @@ document.getElementById('register-sale').addEventListener('click', function(e) {
         return;
     }
 
+    let saleDateTime = document.getElementById('sale-datetime').value;
+    if (!saleDateTime) {
+        saleDateTime = new Date();
+    } else {
+        saleDateTime = new Date(saleDateTime);
+    }
+
+    saleDateTime.setHours(saleDateTime.getHours() - 5);
+    saleDateTime = saleDateTime.toISOString().slice(0, 19).replace('T', ' ');
+
     const saleData = {
         products: cart.map(item => ({
             id: item.id,
             quantity: item.quantity,
             price: item.sale_price
         })),
-        total_amount: calculateTotalAmount()
+        total_amount: calculateTotalAmount(),
+        sale_date: saleDateTime
     };
 
     fetch(window.salesStoreUrl, {
@@ -139,14 +150,15 @@ document.getElementById('register-sale').addEventListener('click', function(e) {
                 cart = [];
                 updateCartDisplay();
                 setLoading(false);
-                showAlert();
+                showSuccessAlert();
             } else {
-                console.error('Error al procesar la venta:', data.message ||
-                    'No se proporcionaron detalles');
+                showFailAlert(data.message || 'Error al procesar la venta');
+                setLoading(false);
             }
         })
         .catch(error => {
-            console.error('Error en la solicitud:', error);
+            alert('Error en la solicitud: ' + error);
+            setLoading(false);
         });
 });
 
@@ -170,15 +182,17 @@ function setLoading(isLoading) {
         buttonText.classList.add('hidden');
         buttonLoader.classList.remove('hidden');
         registerSaleButton.disabled = true;
+        registerSaleButton.classList.add('button-disabled');
     } else {
         buttonText.classList.remove('hidden');
         buttonLoader.classList.add('hidden');
         registerSaleButton.disabled = false;
+        registerSaleButton.classList.remove('button-disabled');
     }
 }
 
-function showAlert() {
-    const alert = document.getElementById('animatedAlert');
+function showSuccessAlert() {
+    const alert = document.getElementById('sucessAlert');
     alert.style.opacity = '1';
     alert.style.transform = 'translate(-50%, 0) scale(1)';
     alert.style.pointerEvents = 'auto';
@@ -188,4 +202,18 @@ function showAlert() {
         alert.style.transform = 'translate(-50%, 20px) scale(0.9)';
         alert.style.pointerEvents = 'none';
     }, 3000);
+}
+
+function showFailAlert(message) {
+    const failAlert = document.getElementById('failAlert');
+    failAlert.querySelector('.text-sm').innerHTML = message;
+    failAlert.style.opacity = '1';
+    failAlert.style.transform = 'translate(-50%, 0) scale(1)';
+    failAlert.style.pointerEvents = 'auto';
+
+    setTimeout(() => {
+        failAlert.style.opacity = '0';
+        failAlert.style.transform = 'translate(-50%, 20px) scale(0.9)';
+        failAlert.style.pointerEvents = 'none';
+    }, 6000);
 }

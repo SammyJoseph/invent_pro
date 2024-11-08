@@ -13,25 +13,33 @@ class SaleController extends Controller
 {
     public function index()
     {
+        return view('sales.index');
+    }
+
+    public function create()
+    {
         $products = Product::with(['image', 'categories'])->get()->map(function ($product) {
             $product->image_url = $product->image ? Storage::url($product->image->url) : null;
             $product->categories_list = $product->categories->pluck('name')->toArray();
             return $product;
         });
     
-        return view('sales.index', compact('products'));
+        return view('sales.create', compact('products'));
     }
 
     public function store(Request $request)
     {
+        Log::info('Datos completos de la solicitud:', $request->all());
+        Log::info('Valor de sale_date:', ['sale_date' => $request->sale_date]);
         $request->validate([
             'products' => 'required|array',
             'products.*.id' => 'required|exists:products,id',
             'products.*.quantity' => 'required|integer|min:1',
             'products.*.price' => 'required|numeric|min:0',
+            'sale_date' => 'required|date',
             'total_amount' => 'required|numeric|min:0',
         ]);
-    
+
         /* Log::info('Datos recibidos para registrar venta', [
             'products' => $request->products,
             'total_amount' => $request->total_amount
@@ -39,10 +47,20 @@ class SaleController extends Controller
     
         try {
             DB::beginTransaction();
+
+            foreach ($request->products as $productData) {
+                $product = Product::findOrFail($productData['id']);
+                if ($product->stock < $productData['quantity']) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => "No hay suficiente stock para el producto '{$product->name}'. <strong>Disponible:</strong> {$product->stock}. Solicitado: {$productData['quantity']}."
+                    ], 400);
+                }
+            }
     
             $totalCost = 0;
             $totalProfit = 0;
-            $productDetails = [];
+            // $productDetails = [];
     
             foreach ($request->products as $productData) {
                 $product = Product::findOrFail($productData['id']);
@@ -53,19 +71,19 @@ class SaleController extends Controller
                 $totalCost += $purchasePrice * $quantity;
                 $totalProfit += ($salePrice - $purchasePrice) * $quantity;
     
-                $productDetails[] = [
+                /* $productDetails[] = [
                     'product_id' => $product->id,
                     'name' => $product->name,
                     'purchase_price' => $purchasePrice,
                     'sale_price' => $salePrice,
                     'quantity' => $quantity
-                ];
+                ]; */
             }
     
             // Log::info('Detalles de los productos para la venta', ['products' => $productDetails]);
     
             $sale = Sale::create([
-                'sale_date' => now(),
+                'sale_date' => $request->sale_date,
                 'total_amount' => $request->total_amount,
                 'total_cost' => $totalCost,
                 'total_profit' => $totalProfit,
@@ -90,6 +108,7 @@ class SaleController extends Controller
     
             Log::info('Venta registrada con éxito', [
                 'sale_id' => $sale->id, 
+                'sale_date' => $sale->sale_date,
                 'total_amount' => $sale->total_amount,
                 'total_cost' => $sale->total_cost,
                 'total_profit' => $sale->total_profit
@@ -99,6 +118,7 @@ class SaleController extends Controller
                 'success' => true,
                 'data' => [
                     'sale_id' => $sale->id,
+                    'sale_date' => $sale->sale_date,
                     'total_amount' => $sale->total_amount,
                     'total_cost' => $sale->total_cost,
                     'total_profit' => $sale->total_profit,
