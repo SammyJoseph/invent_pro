@@ -92,17 +92,17 @@
                 </div>
             </div>
             <div>
-                <span>Imagen</span>
-                @if(isset($product) && $product->image)
-                    <div class="mt-2 mb-5">
-                        <img src="{{ Storage::url($product->image->url) }}" alt="Imagen actual" class="max-w-xs h-auto">
-                        <p class="text-xs italic text-gray-500 mt-1">Imagen actual. Sube una nueva para reemplazarla.</p>
-                    </div>
-                @endif
+                <span>Imagen</span>                
                 <div class="filepond fp-bordered fp-grid mt-1.5 [--fp-grid:2]">
                     <input name="image" type="file" id="images" accept="image/*" />
                     <input type="hidden" name="image_info" id="image_info">
                 </div>
+                @if(isset($product) && $product->image)
+                    <div class="mt-5">
+                        <img src="{{ Storage::url($product->image->url) }}" alt="Imagen actual" class="max-w-xs h-auto">
+                        <p class="text-xs italic text-gray-500 mt-1">Imagen actual. Sube una nueva para reemplazarla.</p>
+                    </div>
+                @endif
             </div>
             <div class="pt-4">
                 <button

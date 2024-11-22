@@ -33,7 +33,8 @@ class CategorySeeder extends Seeder
             'Mascotas',
             'Productos de Papel',
             'Productos Importados',
-            'Productos Veganos'
+            'Productos Veganos',
+            'Otros'
         ];
     
         foreach ($categories as $category) {

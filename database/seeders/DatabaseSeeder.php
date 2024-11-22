@@ -21,6 +21,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'sam@example.com',
         ]);
 
+        User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@inventpro.online',
+        ]);
+
         Storage::deleteDirectory('products');
         Storage::makeDirectory('products');
 

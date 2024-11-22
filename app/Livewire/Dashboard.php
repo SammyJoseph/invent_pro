@@ -82,10 +82,9 @@ class Dashboard extends Component
                 'products.id', 
                 'products.name', 
                 'products.stock',
-                'products.purchase_price',
                 DB::raw('SUM(product_sale.quantity) as total_sold'),
                 DB::raw('SUM(product_sale.quantity * product_sale.sale_price) as total_amount'),
-                DB::raw('SUM(product_sale.quantity * (product_sale.sale_price - products.purchase_price)) as total_profit'),
+                DB::raw('SUM(product_sale.quantity * (product_sale.sale_price - product_sale.purchase_price)) as total_profit'),
                 DB::raw('GROUP_CONCAT(DISTINCT sales.sale_date ORDER BY sales.sale_date DESC SEPARATOR ", ") as sale_dates')
             )
             ->join('product_sale', 'products.id', '=', 'product_sale.product_id')
@@ -96,7 +95,7 @@ class Dashboard extends Component
             $query->whereBetween('sales.sale_date', [$start, $end]);
         }
     
-        return $query->groupBy('products.id', 'products.name', 'products.stock', 'products.purchase_price')
+        return $query->groupBy('products.id', 'products.name', 'products.stock')
             ->orderByDesc('total_profit')
             ->get();
     }

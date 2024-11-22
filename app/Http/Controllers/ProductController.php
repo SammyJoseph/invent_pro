@@ -155,7 +155,7 @@ class ProductController extends Controller
             Storage::deleteDirectory(dirname($tmpPath));
         }
     
-        return redirect()->route('dashboard.products.index')->with('success', 'Producto actualizado exitosamente');
+        return redirect()->route('dashboard.products.edit', $product)->with('success', 'Producto actualizado exitosamente');
     }
 
     /**

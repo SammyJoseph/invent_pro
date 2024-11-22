@@ -33,6 +33,7 @@
             <div>
                 <a href="{{ route('dashboard.sales.index') }}" class="btn bg-info font-medium text-white hover:bg-info-focus focus:bg-info-focus active:bg-info-focus/90">
                     Lista de ventas
+                    <svg class="inline-block w-5 ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="M360-160h440q33 0 56.5-23.5T880-240v-80H360v160ZM80-640h200v-160H160q-33 0-56.5 23.5T80-720v80Zm0 240h200v-160H80v160Zm80 240h120v-160H80v80q0 33 23.5 56.5T160-160Zm200-240h520v-160H360v160Zm0-240h520v-80q0-33-23.5-56.5T800-800H360v160Z"/></svg>
                 </a>
             </div>
         </div>
@@ -63,6 +64,40 @@
                         </div>
                         <div id="cart-items" class="space-y-4">
                             <!-- Productos del carrito -->
+                            <div class="hidden"> {{-- layout demo solo para pre-cargar los estilos del carrito --}}
+                                <div class="flex flex-col min-[500px]:flex-row min-[500px]:items-center gap-5 py-6 border-b border-gray-200 group">
+                                    <div class="w-full md:max-w-[126px]">
+                                        <img src="${item.image_url || 'https://via.placeholder.com/126'}" alt="${item.name}" class="mx-auto rounded-xl object-cover">
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-4 w-full">
+                                        <div class="md:col-span-2">
+                                            <div class="flex flex-col max-[500px]:items-center gap-3">
+                                                <h6 class="font-semibold text-base leading-7 text-black">${item.name}</h6>
+                                                <h6 class="font-normal text-base leading-7 text-gray-500">${item.categories.map(cat => cat.name).join(', ')}</h6>
+                                                <h6 class="font-medium text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-indigo-600">S/.${(Number(item.sale_price) || 0).toFixed(2)}</h6>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center max-[500px]:justify-center h-full max-md:mt-3">
+                                            <div class="flex items-center h-full">
+                                                <button onclick="updateQuantity(${item.id}, -1)" class="group rounded-l-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300">
+                                                    <svg class="stroke-gray-900 transition-all duration-500 group-hover:stroke-black" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                                        <path d="M16.5 11H5.5" stroke="" stroke-width="1.6" stroke-linecap="round" />
+                                                    </svg>
+                                                </button>
+                                                <input type="text" value="${item.quantity}" class="border-y border-gray-200 outline-none text-gray-900 font-semibold text-lg w-full max-w-[73px] min-w-[60px] placeholder:text-gray-900 py-[15px] text-center bg-transparent" readonly>
+                                                <button onclick="updateQuantity(${item.id}, 1)" class="group rounded-r-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300 z-10">
+                                                    <svg class="stroke-gray-900 transition-all duration-500 group-hover:stroke-black" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                                                        <path d="M11 5.5V16.5M16.5 11H5.5" stroke="" stroke-width="1.6" stroke-linecap="round" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center max-[500px]:justify-center md:justify-end max-md:mt-3 h-full">
+                                            <p class="font-bold text-lg leading-8 text-gray-600 text-center transition-all duration-300 group-hover:text-indigo-600">S/.${Number((item.sale_price * item.quantity) || 0).toFixed(2)}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     {{-- Colunmna 2 --}}
@@ -72,7 +107,7 @@
                         <div class="flex pb-4 w-full">
                             <div class="relative w-full ">
                                 <div class=" absolute left-0 top-0 py-2.5 px-4 text-gray-300"></div>
-                                <input type="text" id="barcode_search"
+                                <input type="text" id="barcode_search" autofocus
                                     class="block w-full h-11 pr-11 pl-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-white border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-gray-400"
                                     placeholder="123456789">
                             </div>
@@ -155,8 +190,7 @@
                 d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
         </svg>
         <div class="ms-3 text-sm font-medium">
-            Venta registrada con éxito. <a href="#" class="font-semibold underline hover:no-underline">Ver
-                todas</a>.
+            Venta registrada con éxito. <a href="{{ route('dashboard.sales.index') }}" class="font-semibold underline hover:no-underline">Ver todas</a>.
         </div>
     </div>
     <div id="failAlert"
@@ -168,8 +202,7 @@
                 d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
         </svg>
         <div class="ms-3 text-sm font-medium">
-            Venta registrada con éxito. <a href="#" class="font-semibold underline hover:no-underline">Ver
-                todas</a>.
+            Venta registrada con éxito. <a href="{{ route('dashboard.sales.index') }}" class="font-semibold underline hover:no-underline">Ver todas</a>.
         </div>
     </div>
 @endsection
