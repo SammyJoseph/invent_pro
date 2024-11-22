@@ -24,6 +24,19 @@ class Dashboard extends Component
         $this->dateRange = $this->startDate . ' to ' . $this->endDate;
     }
 
+    public function render()
+    {
+        $sales = $this->getSalesForDateRange();
+        $productSales = $this->getProductSales();
+        $totalProfit = $productSales->sum('total_profit');
+    
+        $categoryA = $this->getCategoryA($productSales, $totalProfit);
+        $categoryB = $this->getCategoryB($productSales, $totalProfit);
+        $categoryC = $this->getCategoryC($productSales, $totalProfit);
+        
+        return view('livewire.dashboard', compact('sales', 'categoryA', 'categoryB', 'categoryC'));
+    }
+
     public function updatedDateRange($value)
     {
         $dates = explode(' to ', $value);
@@ -40,24 +53,14 @@ class Dashboard extends Component
         // $this->categoryC = Product::whereBetween('date', [$startDate, $endDate])->where('category', 'C')->get();
     }
 
-    public function render()
-    {
-        $sales = $this->getSalesForDateRange();
-        $productSales = $this->getProductSales();
-        $totalProfit = $productSales->sum('total_profit');
-    
-        $categoryA = $this->getCategoryA($productSales, $totalProfit);
-        $categoryB = $this->getCategoryB($productSales, $totalProfit);
-        $categoryC = $this->getCategoryC($productSales, $totalProfit);
-        
-        return view('livewire.dashboard', compact('sales', 'categoryA', 'categoryB', 'categoryC'));
-    }
-
     private function getFormattedDates()
     {
+        $start = Carbon::createFromFormat('d-m-Y', $this->startDate)->startOfDay();
+        $end = Carbon::createFromFormat('d-m-Y', $this->endDate)->endOfDay();
+        
         return [
-            Carbon::createFromFormat('d-m-Y', $this->startDate)->format('Y-m-d'),
-            Carbon::createFromFormat('d-m-Y', $this->endDate)->format('Y-m-d')
+            $start->format('Y-m-d H:i:s'),
+            $end->format('Y-m-d H:i:s')
         ];
     }
     
@@ -82,7 +85,8 @@ class Dashboard extends Component
                 'products.purchase_price',
                 DB::raw('SUM(product_sale.quantity) as total_sold'),
                 DB::raw('SUM(product_sale.quantity * product_sale.sale_price) as total_amount'),
-                DB::raw('SUM(product_sale.quantity * (product_sale.sale_price - products.purchase_price)) as total_profit')
+                DB::raw('SUM(product_sale.quantity * (product_sale.sale_price - products.purchase_price)) as total_profit'),
+                DB::raw('GROUP_CONCAT(DISTINCT sales.sale_date ORDER BY sales.sale_date DESC SEPARATOR ", ") as sale_dates')
             )
             ->join('product_sale', 'products.id', '=', 'product_sale.product_id')
             ->join('sales', 'product_sale.sale_id', '=', 'sales.id');

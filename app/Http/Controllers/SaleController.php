@@ -95,7 +95,7 @@ class SaleController extends Controller
                 'total_amount' => $request->total_amount,
                 'total_cost' => $totalCost,
                 'total_profit' => $totalProfit,
-                'payment_method' => 'efectivo',
+                'payment_method' => 'Efectivo',
                 'notes' => null,
             ]);
     
