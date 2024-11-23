@@ -4,8 +4,8 @@
 
 @push('head')
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script src="{{ asset('dashboard_ui/js/libs/forms.js') }}" defer></script>
-    <script src="{{ asset('dashboard_ui/js/pages/forms-datepicker.js') }}" defer></script>
+    <script src="{{ asset('dashboard_ui/js/libs/forms.js?v=0.1') }}" defer></script>
+    <script src="{{ asset('dashboard_ui/js/pages/forms-datepicker.js?v=0.1') }}" defer></script>
 @endpush
 
 @section('content')
@@ -100,7 +100,7 @@
                             </div>
                         </div>
                     </div>
-                    {{-- Colunmna 2 --}}
+                    {{-- Columna 2 --}}
                     <div
                         class=" col-span-12 xl:col-span-4 bg-gray-50 w-full max-xl:px-6 max-w-3xl xl:max-w-lg mx-auto lg:pl-8 py-8">
                         <label class="flex items-center mb-1.5 text-gray-400 text-sm font-medium">Código de Barras</label>
@@ -238,8 +238,10 @@
         window.salesStoreUrl = "{{ route('dashboard.sales.store') }}";
 
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('barcode_search').focus();
+            document.getElementById('barcode_search').focus();            
         });
+
+        const beepSound = new Audio('{{ asset('audio/beep.mp3') }}');
     </script>
-    <script src="{{ asset('js/sales-cart.js') }}"></script>
+    <script src="{{ asset('js/sales-cart.js?v=0.1?v=0.1') }}"></script>
 @endpush

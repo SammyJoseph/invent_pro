@@ -22,6 +22,7 @@ function addToCart(product) {
             quantity: 1
         });
     }
+    beepSound.play();
     updateCartDisplay();
 
     const firstCartItem = document.querySelector('#cart-items > div:first-child');
